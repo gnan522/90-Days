@@ -19,18 +19,18 @@
 /* Layout: single phone column — sticky week strip, today's hero, then the three steps in gym order, rest timer docked at the bottom */
 :root{
   --bg:#EEF1F6; --surface:#FFFFFF; --ink:#16213A; --muted:#5D6880; --line:#DCE1EA;
-  --accent:#F26B1D; --accent-ink:#FFFFFF; --core:#0F8B8D; --warm:#3B4E78; --done:#2E9E5B;
+  --accent:#F26B1D; --accent-ink:#FFFFFF; --core:#0F8B8D; --warm:#3B4E78; --done:#2E9E5B; --warn:#C9781A;
   --tint:#F2F4F8; --chip:#E3E8F0;
   --display:"Barlow Condensed","Arial Narrow","Roboto Condensed",system-ui,sans-serif;
   --body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0D1322; --surface:#161F33; --ink:#E9EDF5; --muted:#9AA6BE; --line:#26314A;
-  --accent:#FF7A2E; --accent-ink:#1A0D04; --core:#2DB3B5; --warm:#8FA4D6; --done:#45C47A;
+  --accent:#FF7A2E; --accent-ink:#1A0D04; --core:#2DB3B5; --warm:#8FA4D6; --done:#45C47A; --warn:#E39A3B;
   --tint:#F2F4F8; --chip:#212C45; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0D1322; --surface:#161F33; --ink:#E9EDF5; --muted:#9AA6BE; --line:#26314A;
-  --accent:#FF7A2E; --accent-ink:#1A0D04; --core:#2DB3B5; --warm:#8FA4D6; --done:#45C47A;
+  --accent:#FF7A2E; --accent-ink:#1A0D04; --core:#2DB3B5; --warm:#8FA4D6; --done:#45C47A; --warn:#E39A3B;
   --tint:#F2F4F8; --chip:#212C45; color-scheme:dark}
 *{box-sizing:border-box}
 html,body{background:var(--bg)}
@@ -131,6 +131,47 @@ section{margin-top:26px;display:grid;gap:10px;scroll-margin-top:150px}
 .bw .avg{margin-left:auto;text-align:right;font-size:11.5px;color:var(--muted)}
 .bw .avg b{display:block;font-family:var(--display);font-size:20px;color:var(--ink);font-variant-numeric:tabular-nums}
 
+.rchips{display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;padding:0 12px 12px 54px}
+.rchip{height:32px;padding:0 10px;white-space:nowrap;flex:none;border-radius:16px;border:1.5px solid var(--line);font-size:12.5px;font-weight:700;color:var(--muted);background:var(--surface)}
+.rchip.on[data-r="top"]{background:var(--done);border-color:var(--done);color:#fff}
+.rchip.on[data-r="in"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.rchip.on[data-r="miss"]{background:var(--warn);border-color:var(--warn);color:#fff}
+.wt .last b.up{color:var(--done)} .wt .last b.dn{color:var(--warn)}
+.stepsc{grid-column:1/-1;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px;display:grid;gap:8px}
+.stepsc.complete{border-color:color-mix(in srgb,var(--done) 55%,var(--line))}
+.stepsc .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.stepsc label{font-weight:700;font-size:13.5px}
+.stepsc input{width:110px;height:36px;border-radius:9px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:600 15px var(--body);padding:0 10px;font-variant-numeric:tabular-nums}
+.stepsc .paste{height:36px;padding:0 12px;border-radius:9px;background:var(--chip);font-weight:700;font-size:13px}
+.stepsc .of{margin-left:auto;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.stepsc .of b{font-family:var(--display);font-size:20px;color:var(--ink)}
+.stepsc .track{height:8px;border-radius:5px;background:var(--chip);overflow:hidden}
+.stepsc .track i{display:block;height:100%;background:var(--accent);border-radius:5px}
+.stepsc.complete .track i{background:var(--done)}
+.stepsc .msg{font-size:11.5px;color:var(--muted)}
+.review{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.review .rh{background:var(--ink);color:var(--bg);padding:14px;display:grid;gap:4px}
+.review .rh .eyebrow{color:var(--accent)}
+.review .rh h3{margin:0;font-family:var(--display);font-weight:800;font-size:26px;text-transform:uppercase;line-height:1}
+.review .rh p{margin:0;font-size:13px;opacity:.8}
+.rstats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}
+.rstats div{padding:12px 10px;display:grid;gap:2px;min-width:0}
+.rstats div+div{border-left:1px solid var(--line)}
+.rstats b{font-family:var(--display);font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.rstats span{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.rstats small{font-size:11.5px;color:var(--muted)}
+.radvice{padding:12px 14px;border-bottom:1px solid var(--line);display:grid;gap:6px;font-size:13.5px}
+.radvice p{margin:0}
+.rday{padding:10px 14px 4px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rrow{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:8px 14px;border-top:1px solid var(--line)}
+.rrow:first-of-type{border-top:0}
+.rrow .nm{font-weight:700;font-size:14px;min-width:0}
+.rrow .why{grid-column:1/-1;font-size:12.5px;color:var(--muted)}
+.rpill{font-size:12.5px;font-weight:700;padding:3px 9px;border-radius:12px;white-space:nowrap;font-variant-numeric:tabular-nums;align-self:start;background:var(--chip);color:var(--ink)}
+.rpill.up{background:var(--done);color:#fff}.rpill.dn{background:var(--warn);color:#fff}.rpill.no{color:var(--muted)}
+.rmeth{padding:12px 14px;font-size:11.5px;color:var(--muted);border-top:1px solid var(--line)}
+.rlock{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:12px 14px;font-size:13.5px}
+.rlock button{margin-left:auto;font-weight:700;color:var(--accent);white-space:nowrap}
 .restday{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:14px;color:var(--muted);font-size:14px}
 .foot{margin-top:28px;font-size:12px;color:var(--muted);display:grid;gap:6px}
 .foot .sync{display:flex;align-items:center;gap:6px;font-weight:600}
@@ -173,6 +214,8 @@ section{margin-top:26px;display:grid;gap:10px;scroll-margin-top:150px}
     <div class="prog" id="prog"><div class="track"><i style="width:0"></i></div><div class="num">0%</div></div>
     <div class="steps" id="steps"></div>
   </div>
+
+  <section id="s-review"></section>
 
   <section id="s-habits">
     <div class="sh"><h2>Cut targets</h2><span class="meta">20% → 12%</span></div>
@@ -221,11 +264,11 @@ const SCHED = {0:"rest",1:1,2:2,3:"rest",4:4,5:5,6:6};
 const DN = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
 const DFULL = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 const HABITS = [
-  {id:"steps",t:"10k steps",s:"Walk it in"},
   {id:"protein",t:"160–170 g protein",s:"Every day"},
   {id:"cals",t:"~1,900–2,100 kcal",s:"≈500 under maintenance"},
   {id:"sleep",t:"7–9 h sleep",s:"Last night"},
 ];
+const CAN_PASTE = !!(navigator.clipboard && navigator.clipboard.readText) && !window.claude;
 const CHECK = '<svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg>';
 const CHEV = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>';
 
@@ -243,7 +286,9 @@ let dbRef = null, syncMode = "local";
 
 try { days = JSON.parse(localStorage.getItem("ba:days")||"{}") || {}; } catch(e) { days = {}; }
 const saveLocal = () => { try { localStorage.setItem("ba:days", JSON.stringify(days)); } catch(e){} };
-const day = k => (days[k] ||= {done:{},w:{},h:{},bw:""});
+const day = k => { const d=(days[k] ||= {done:{},w:{},h:{},bw:""}); d.r ||= {}; d.w ||= {}; d.h ||= {}; d.done ||= {}; return d; };
+const dayNum = k => SCHED[parseKey(k).getDay()];
+const wkey = (k,e) => e.id+"@"+dayNum(k);
 
 function planFor(k){
   const s = SCHED[parseKey(k).getDay()];
@@ -294,19 +339,65 @@ function exCard(pre,e,k,kind){
     h+=`<div class="sets">`;
     for(let i=0;i<e.sets;i++) h+=`<button class="set${i<n?" on":""}" data-act="set" data-i="${i}" aria-pressed="${i<n}">Set ${i+1}</button>`;
     h+=`</div>`;
-    if(kind==="work"){
-      const last = lastWeight(k,e.id);
-      h+=`<div class="wt"><input id="w-${e.id}" inputmode="decimal" placeholder="lb" value="${esc(d.w[e.id]||"")}" data-act="weight" aria-label="Weight used for ${esc(e.name)}"><span class="last">${last?`Last: <b>${esc(last.v)} lb</b> · ${last.when}`:"Log the weight you used"}</span></div>`;
+    if(kind==="work" && !e.check){
+      const wk=wkey(k,e), prev=lastLog(k,wk,e.id);
+      let hint="Log the weight you used";
+      if(prev){ const rc=recommend(e,prev,lastLog(prev.date,wk,e.id));
+        hint=`Last: <b>${esc(prev.w||"BW")}${prev.w?" lb":""}</b> · ${prev.when}`+(rc.target?` · Try <b class="${rc.dir==="up"?"up":rc.dir==="down"?"dn":""}">${esc(rc.target)}</b>`:""); }
+      h+=`<div class="wt"><input id="w-${e.id}" data-key="${wk}" inputmode="decimal" placeholder="lb" value="${esc(d.w[wk]||"")}" data-act="weight" aria-label="Weight used for ${esc(e.name)}"><span class="last">${hint}</span></div>`;
+      const rv=d.r[wk]||"";
+      h+=`<div class="rchips" role="group" aria-label="How did the sets go">${[["top","All sets at top"],["in","In range"],["miss","Missed"]].map(([v,l])=>`<button class="rchip${rv===v?" on":""}" data-act="res" data-key="${wk}" data-r="${v}" aria-pressed="${rv===v}">${l}</button>`).join("")}</div>`;
     }
   }
   return h+`</div>`;
 }
 
-function lastWeight(k,exId){
-  const keys=Object.keys(days).filter(x=>x<k && days[x].w && days[x].w[exId]).sort();
-  if(!keys.length) return null;
-  const lk=keys[keys.length-1]; const d=parseKey(lk);
-  return {v:days[lk].w[exId], when:d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})};
+/* most recent log of an exercise strictly before date k */
+function lastLog(k,wk,legacy){
+  const ks=Object.keys(days).filter(x=>x<k && days[x] && ((days[x].w&&(days[x].w[wk]||days[x].w[legacy])) || (days[x].r&&days[x].r[wk]))).sort();
+  if(!ks.length) return null;
+  const lk=ks[ks.length-1], d=days[lk];
+  return {date:lk, w:(d.w&&(d.w[wk]||d.w[legacy]))||"", r:(d.r&&d.r[wk])||"", when:parseKey(lk).toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})};
+}
+function logOn(k,wk,legacy){
+  const d=days[k]; if(!d) return null;
+  const w=(d.w&&(d.w[wk]||d.w[legacy]))||"", r=(d.r&&d.r[wk])||"";
+  return (w||r)?{date:k,w,r}:null;
+}
+
+/* ---------- progression engine ----------
+   Double progression + ACSM (2009) guidance: once you can beat the target reps on every set,
+   raise the load 2–10%. Small jumps for small muscles, bigger for legs. On a cut, holding load = muscle kept. */
+const LOWER=/squat|deadlift|lunge|leg-press|split-squat|calf/;
+const ISO=/lateral|fly|curl|extension|face-pull|straight-arm|crunch|leg-curl|calf-raise/;
+const BWT=/pull-ups|dips|hanging|ab-wheel|side-plank/;
+const r25 = x => Math.round(x/2.5)*2.5;
+function stepFor(e,load){
+  const id=e.id;
+  let lo, hi;
+  if(ISO.test(id)){ lo=2.5; hi=5; }
+  else if(LOWER.test(id)){ lo=5; hi=10; }
+  else { lo=5; hi=5; }
+  return Math.min(hi, Math.max(lo, r25(load*0.05)));
+}
+function recommend(e,cur,prev){
+  if(!cur) return {dir:"none",target:"",why:"Not logged this week. Log weight and tap how the sets went."};
+  const load=parseFloat(cur.w)||0, bw=BWT.test(e.id)&&!load, top=(e.rx.match(/–(\d+)/)||[])[1];
+  const prevMiss = prev && prev.r==="miss";
+  if(!cur.r) return {dir:"hold",target:load?load+" lb":"",why:"Tap how the sets went next time so the app can tell you when to go up."};
+  if(cur.r==="top"){
+    if(bw) return {dir:"up",target:"+1–2 reps",why:"Every set at the top of the range. Add reps, or hold a 5 lb dumbbell once you pass the range."};
+    const st=stepFor(e,load); const t=r25(load+st);
+    return {dir:"up",target:t+" lb",why:`Every set hit ${top||"the top"} reps. Add ${st} lb (≈${Math.round(st/load*100)}%) and work back up the rep range.`};
+  }
+  if(cur.r==="in") return {dir:"hold",target:bw?"Same":(load+" lb"),why:"Inside the range. Keep the weight and add a rep per set until every set hits the top."};
+  // miss
+  if(prevMiss){
+    if(bw) return {dir:"down",target:"Easier",why:"Missed reps two weeks running. Use a band or the machine version, then build back."};
+    const t=r25(load*0.9);
+    return {dir:"down",target:t+" lb",why:"Missed reps two weeks running. Drop ~10%, rebuild clean reps, then progress again. Normal on a cut."};
+  }
+  return {dir:"hold",target:bw?"Same":(load+" lb"),why:"Missed reps once. Repeat the same weight with full rest. Drop ~10% only if it happens again next week."};
 }
 
 function render(){
@@ -333,6 +424,78 @@ function render(){
   document.getElementById("workNote").textContent = p.rest?"No lifting today. Recovery is when you grow.":"Log the weight you used. Hit the top of the rep range on every set? Add weight next time.";
   document.getElementById("l-work").innerHTML=p.ex.map(e=>exCard("wo:",e,k,"work")).join("");
   renderHabits();
+  renderReview();
+}
+
+let showReview=false;
+function weekMon(k){ const d=parseKey(k); d.setDate(d.getDate()-((d.getDay()+6)%7)); return d; }
+function addDays(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
+function avgOf(arr){ return arr.length? arr.reduce((a,b)=>a+b,0)/arr.length : null; }
+function weekStats(mon){
+  const bws=[], steps=[]; let workouts=0;
+  for(let i=0;i<7;i++){ const k=key(addDays(mon,i)), d=days[k]; if(!d) continue;
+    const b=parseFloat(d.bw); if(!isNaN(b)) bws.push(b);
+    const s=parseInt(d.steps,10); if(!isNaN(s)) steps.push(s);
+    if(!planFor(k).rest){ const so=secTotals(k,"wo:",planFor(k).ex,false); if(so.got>=so.tot*0.6) workouts++; } }
+  return {bw:avgOf(bws), nbw:bws.length, steps:avgOf(steps), nsteps:steps.length, workouts};
+}
+function renderReview(){
+  const el=document.getElementById("s-review");
+  const k=sel, dow=parseKey(k).getDay(), unlocked = dow===6||dow===0;
+  const mon = (unlocked||showReview) ? weekMon(k) : addDays(weekMon(k),-7);
+  if(!unlocked && !showReview){
+    el.innerHTML=`<div class="rlock"><span><b>Weekly check-in</b><br><span style="color:var(--muted);font-size:12.5px">Unlocks Saturday after your 5th workout.</span></span><button id="openRev">See last week's</button></div>`;
+    return;
+  }
+  const cur=weekStats(mon), prv=weekStats(addDays(mon,-7));
+  // body weight
+  let bwVal="–", bwSub="Log 3+ mornings", advice=[];
+  if(cur.bw && cur.nbw>=3){
+    bwVal=cur.bw.toFixed(1);
+    if(prv.bw && prv.nbw>=3){
+      const ch=cur.bw-prv.bw, pct=ch/prv.bw*100;
+      bwSub=`${ch<=0?"":"+"}${ch.toFixed(1)} lb (${pct.toFixed(1)}%)`;
+      const loss=-ch;
+      if(loss<0.5) advice.push(`<p><b>Fat loss stalled (${loss.toFixed(1)} lb).</b> Target is 0.75–1 lb/week. Cut 100–150 kcal or add 2,000 steps a day. If it stalls a 2nd week, do both.</p>`);
+      else if(loss>1.6) advice.push(`<p><b>Losing fast (${loss.toFixed(1)} lb).</b> Above ~1% of body weight per week risks muscle. Add 100–150 kcal, mostly carbs around training.</p>`);
+      else advice.push(`<p><b>On track: −${loss.toFixed(1)} lb this week.</b> That's inside the 0.5–1% per week range research links to keeping muscle on a cut. Change nothing.</p>`);
+    } else bwSub="vs last week: need 3+ mornings";
+  }
+  const stVal = cur.steps? Math.round(cur.steps).toLocaleString() : "–";
+  if(cur.steps && cur.steps<8000) advice.push(`<p><b>Steps averaged ${Math.round(cur.steps).toLocaleString()}.</b> Get closer to 10,000. Daily walking is the easiest lever for fat loss that doesn't hurt recovery.</p>`);
+  // exercises
+  let ups=0,holds=0,downs=0,none=0, rows="";
+  [1,2,4,5,6].forEach(dn=>{
+    const p=PLAN.days[dn], dk=key(addDays(mon,dn-1));
+    rows+=`<div class="rday">${DFULL[dn]} · ${esc(p.title)}</div>`;
+    p.ex.forEach(e=>{
+      const wk=e.id+"@"+dn, c=logOn(dk,wk,e.id), pv=lastLog(dk,wk,e.id);
+      const rc=recommend(e,c,pv);
+      if(rc.dir==="up")ups++; else if(rc.dir==="down")downs++; else if(rc.dir==="none")none++; else holds++;
+      const from = c&&c.w ? `${c.w}${pv&&pv.w&&pv.w!==c.w?` (was ${pv.w})`:""} → ` : "";
+      const pill = rc.dir==="none" ? `<span class="rpill no">No log</span>` : `<span class="rpill ${rc.dir==="up"?"up":rc.dir==="down"?"dn":""}">${rc.dir==="up"?"▲ ":rc.dir==="down"?"▼ ":"= "}${esc(from+rc.target)}</span>`;
+      rows+=`<div class="rrow"><span class="nm">${esc(e.name)}</span>${pill}${rc.dir==="none"?"":`<span class="why">${esc(rc.why)}</span>`}</div>`;
+    });
+  });
+  const logged=ups+holds+downs;
+  if(logged){
+    if(downs>ups && downs>=3) advice.push(`<p><b>Strength slipping on ${downs} lifts.</b> Check sleep and protein first. If it continues next week, add 100–150 kcal or take a deload week.</p>`);
+    else advice.push(`<p><b>${ups} lift${ups===1?"":"s"} going up, ${holds} holding, ${downs} dropping.</b> On a cut, holding your weights means you're keeping muscle. Anything going up is a bonus.</p>`);
+  }
+  if(!advice.length) advice.push(`<p>Log your weights, how the sets went, morning weight and steps. The check-in fills in as you go.</p>`);
+  const lbl=mon.toLocaleDateString(undefined,{month:"short",day:"numeric"});
+  el.innerHTML=`<div class="review">
+    <div class="rh"><div class="eyebrow">Weekly check-in${!unlocked?" · last week":""}</div><h3>Week of ${lbl}</h3><p>Compared with the week before. Use the targets below next week.</p></div>
+    <div class="rstats">
+      <div><span>Body weight</span><b>${bwVal}</b><small>${bwSub}</small></div>
+      <div><span>Avg steps</span><b>${stVal}</b><small>${cur.nsteps?cur.nsteps+" days logged":"Not logged"}</small></div>
+      <div><span>Workouts</span><b>${cur.workouts}/5</b><small>${logged} lifts logged</small></div>
+    </div>
+    <div class="radvice">${advice.join("")}</div>
+    ${rows}
+    <div class="rmeth">How it decides: double progression. When every set reaches the top of the rep range, the weight goes up 2–10% (ACSM guidance), about +2.5–5 lb for small muscles and +5–10 lb for legs. In range means hold and add reps. Missing reps two weeks in a row means drop ~10% and rebuild.</div>
+    ${!unlocked?`<div class="rmeth" style="padding-top:0"><button id="closeRev" style="color:var(--accent);font-weight:700">Hide</button></div>`:""}
+  </div>`;
 }
 
 function renderHabits(){
@@ -342,6 +505,8 @@ function renderHabits(){
   const end=parseKey(k); const vals=[];
   for(let i=0;i<7;i++){const x=new Date(end); x.setDate(end.getDate()-i); const v=parseFloat((days[key(x)]||{}).bw); if(!isNaN(v)) vals.push(v);}
   const avg = vals.length? (vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1):"–";
+  const st=parseInt(d.steps,10)||0, sp=Math.min(1,st/10000);
+  h=`<div class="stepsc${st>=10000?" complete":""}"><div class="row"><label for="stepsIn">Steps today</label><input id="stepsIn" inputmode="numeric" placeholder="0" value="${esc(d.steps||"")}">${CAN_PASTE?`<button class="paste" id="pasteSteps">Paste</button>`:""}<span class="of"><b>${st.toLocaleString()}</b> / 10,000</span></div><div class="track"><i style="width:${Math.round(sp*100)}%"></i></div><div class="msg" id="stepsMsg">${st>=10000?"Goal hit.":st?(10000-st).toLocaleString()+" to go.":"Enter today's count from StepUp, or paste it after running your steps shortcut."}</div></div>`+h;
   h+=`<div class="bw"><label for="bwIn">Morning weight</label><input id="bwIn" inputmode="decimal" placeholder="lb" value="${esc(d.bw||"")}"><div class="avg"><b>${avg}</b>7-day avg${vals.length?` (${vals.length} day${vals.length>1?"s":""})`:""}</div></div>`;
   document.getElementById("habits").innerHTML=h;
 }
@@ -377,7 +542,7 @@ async function initDb(){
       snap.docs.forEach(doc=>{
         const v=doc.data(); if(!v||!v.date) return;
         const cur=days[v.date];
-        if(!cur || (v.updated||0) >= (cur.updated||0)){ days[v.date]={done:{...(v.done||{})},w:{...(v.w||{})},h:{...(v.h||{})},bw:v.bw||"",updated:v.updated||0}; changed=true; }
+        if(!cur || (v.updated||0) >= (cur.updated||0)){ days[v.date]={done:{...(v.done||{})},w:{...(v.w||{})},r:{...(v.r||{})},h:{...(v.h||{})},bw:v.bw||"",steps:v.steps||"",updated:v.updated||0}; changed=true; }
       });
       // push local-only days up once
       Object.keys(days).forEach(k=>{ if(!snap.docs.some(x=>x.id===k) && Object.keys(days[k].done||{}).length) persist(k); });
@@ -389,7 +554,7 @@ async function initDb(){
 /* ---------- interactions ---------- */
 function touch(k){ day(k).updated=Date.now(); persist(k); }
 document.getElementById("week").addEventListener("click",e=>{
-  const b=e.target.closest(".dchip"); if(!b) return; sel=b.dataset.k; open.clear(); render(); window.scrollTo({top:0});
+  const b=e.target.closest(".dchip"); if(!b) return; sel=b.dataset.k; open.clear(); showReview=false; render(); window.scrollTo({top:0});
 });
 document.getElementById("prevWk").onclick=()=>{weekOffset--; shiftSel(); };
 document.getElementById("nextWk").onclick=()=>{weekOffset++; shiftSel(); };
@@ -398,7 +563,11 @@ function shiftSel(){ const t=today(); const mon=new Date(t); mon.setDate(t.getDa
 document.addEventListener("click",e=>{
   const hab=e.target.closest("[data-hab]");
   if(hab){ const d=day(sel); d.h[hab.dataset.hab]=!d.h[hab.dataset.hab]; touch(sel); renderHabits(); return; }
+  if(e.target.closest("#openRev")){ showReview=true; renderReview(); return; }
+  if(e.target.closest("#closeRev")){ showReview=false; renderReview(); return; }
+  if(e.target.closest("#pasteSteps")){ navigator.clipboard.readText().then(t=>{ const n=(t||"").replace(/[^0-9]/g,""); if(n){ day(sel).steps=n; day(sel).h.steps=+n>=10000; touch(sel); renderHabits(); } else document.getElementById("stepsMsg").textContent="Clipboard didn't have a number. Run your steps shortcut first."; }).catch(()=>{ document.getElementById("stepsMsg").textContent="Couldn't read the clipboard. Type the number in instead."; }); return; }
   const b=e.target.closest("[data-act]"); if(!b) return;
+  if(b.dataset.act==="res"){ const d=day(sel), kk=b.dataset.key; d.r[kk] = d.r[kk]===b.dataset.r ? "" : b.dataset.r; touch(sel); render(); return; }
   const card=b.closest(".ex"); if(!card) return; const id=card.dataset.id; const act=b.dataset.act;
   if(act==="toggle"){ open.has(id)?open.delete(id):open.add(id); card.classList.toggle("open"); card.querySelector(".exb").hidden=!open.has(id); return; }
   const d=day(sel);
@@ -415,15 +584,23 @@ document.addEventListener("click",e=>{
 document.addEventListener("input",e=>{
   const t=e.target;
   if(t.id==="bwIn"){ day(sel).bw=t.value.trim(); touch(sel); return; }
-  if(t.dataset.act==="weight"){ const exId=t.id.slice(2); day(sel).w[exId]=t.value.trim(); touch(sel); }
+  if(t.dataset.act==="weight"){ day(sel).w[t.dataset.key]=t.value.trim(); touch(sel); }
+  if(t.id==="stepsIn"){ day(sel).steps=t.value.replace(/[^0-9]/g,""); touch(sel); updateSteps(); }
 });
-document.addEventListener("change",e=>{ if(e.target.id==="bwIn") renderHabits(); });
+document.addEventListener("change",e=>{ if(e.target.id==="bwIn"||e.target.id==="stepsIn"){ renderHabits(); renderReview(); } });
+function updateSteps(){
+  const st=parseInt(day(sel).steps,10)||0; const c=document.querySelector(".stepsc"); if(!c) return;
+  c.classList.toggle("complete",st>=10000); c.querySelector(".of b").textContent=st.toLocaleString();
+  c.querySelector(".track i").style.width=Math.round(Math.min(1,st/10000)*100)+"%";
+  document.getElementById("stepsMsg").textContent = st>=10000?"Goal hit.":st?(10000-st).toLocaleString()+" to go.":"";
+  day(sel).h.steps = st>=10000;
+}
 
 let armReset=false;
 document.getElementById("resetDay").onclick=e=>{
   if(!armReset){ armReset=true; e.target.textContent="Tap again to clear all checks for this day"; setTimeout(()=>{armReset=false; e.target.textContent="Clear this day";},3000); return; }
   armReset=false; e.target.textContent="Clear this day";
-  days[sel]={done:{},w:day(sel).w,h:{},bw:day(sel).bw,updated:Date.now()}; persist(sel); render();
+  days[sel]={done:{},w:day(sel).w,r:day(sel).r,h:{},bw:day(sel).bw,steps:day(sel).steps,updated:Date.now()}; persist(sel); render();
 };
 
 /* ---------- rest timer ---------- */
